@@ -14,7 +14,7 @@ import { Q } from '@nozbe/watermelondb';
 
 const ListTypeOfServices = ({navigation, route}) => {
     const [dataServices, setDataServices] = useState([]);
-    const [errorRequest,setErrorRequest] = useState(false)
+    const [errorRequest,setErrorRequest] = useState(false);
 
   const Item = ({item, onPress, style}) => (
     <TouchableOpacity onPress={onPress} style={[styles.item, style]}>

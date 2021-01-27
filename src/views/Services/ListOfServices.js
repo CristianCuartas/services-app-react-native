@@ -13,6 +13,8 @@ import {servicesCollection} from './../../model/index';
 
 const ListOfServices = ({navigation, route}) => {
     const [dataServices, setDataServices] = useState([]);
+    const [errorRequest,setErrorRequest] = useState(false);
+
     
     const propName = R.prop('name');
     const sortOne = R.sortWith([
@@ -42,12 +44,28 @@ const ListOfServices = ({navigation, route}) => {
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
       servicesCollection.query().fetch()
-      .then((allServices)=>
+      .then((allServices)=>{
           setDataServices(allServices)
-        )
+          setErrorRequest(false)
+        })
+      .catch(error=>{
+          setErrorRequest(true)
+      })
     });
   }, [navigation]);
 
+  if(errorRequest){
+    return (
+    <>
+      <Text style={styles.errorMessage}>Oops, an error occurred, try again later.</Text>
+      <Button 
+        style={styles.createServiceButton}
+        title=" + New service"
+        onPress={() => navigation.navigate('CreateService')}
+      />
+    </>
+    )
+  }
 
     return (
         <SafeAreaView style={styles.container}>
