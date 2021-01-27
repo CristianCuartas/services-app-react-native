@@ -1,12 +1,11 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import {View, Text, StyleSheet, Button} from 'react-native'
 
-const DetailsScreen = ({route, navigation}) => {
+const DetailsScreen = ({route}) => {
     return(
         <View style={styles.container}>
             <Text>Name: {route.params?.name} </Text>
             <Text>Price: {route.params?.price} </Text>
-            <Button title='Go to home' onPress={()=> navigation.navigate('Home') } />
         </View>
     )
 }

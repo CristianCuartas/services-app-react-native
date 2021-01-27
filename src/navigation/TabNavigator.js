@@ -14,7 +14,7 @@ const BottomTabNavigator = () => {
               if (route.name === 'Home') {
                 iconName = 'home'
               } else if (route.name === 'Profile') {
-                iconName = 'account_box';
+                iconName = 'account-box';
               }
               return <Icon name={iconName} size={size} color={color} />;
             },

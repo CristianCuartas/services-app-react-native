@@ -1,14 +1,17 @@
 import React, {useState} from 'react';
 import {View, Text, StyleSheet, Button, TextInput} from 'react-native';
-{/*import {saveService} from './../../models/Helpers';*/}
+import {database, servicesCollection} from './../../model/index';
 
-const CreateService = ({navigation, route}) => {
+const CreateService = ({navigation}) => {
     const [serviceName, setServiceName] = useState('');
-    const [servicePrice, setServicePrice] = useState('');
 
-   {/* const handleSavePress = async () => {
-        await saveService({serviceName, servicePrice})
-    } */}
+    async function postService (name){
+        await database.action(async () => {
+          const newService = await servicesCollection.create(service => {
+            service._raw['name'] = name
+          })
+        })      
+      }      
 
     return(
         <View style={styles.container}>
@@ -20,20 +23,13 @@ const CreateService = ({navigation, route}) => {
                 value={serviceName}
                 onChangeText={setServiceName}
             />
-               <TextInput
-                multiline
-                style={styles.priceText}
-                placeholder="Price of service"
-                value={servicePrice}
-                onChangeText={setServicePrice}
-            />
             <Button 
                 title='Done' 
                 onPress={()=>{
-                    /*handleSavePress();*/
-                    navigation.navigate('Home', {name: serviceName, price:servicePrice})
+                    postService(serviceName);
+                    navigation.navigate('Home')
                 }} 
-                disabled={servicePrice.length === 0 || serviceName.length === 0} 
+                disabled={ serviceName.length === 0} 
             />
         </View>
     )
@@ -48,12 +44,6 @@ const styles = StyleSheet.create({
     nameText:{
         alignSelf:'stretch',
         height: 40,
-        width:300,
-        padding: 10, 
-        backgroundColor: 'white'
-    },
-    priceText:{
-        height: 40, 
         width:300,
         padding: 10, 
         backgroundColor: 'white'
